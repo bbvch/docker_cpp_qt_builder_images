@@ -1,0 +1,25 @@
+sudo: required
+
+language: python
+
+services:
+  - docker
+
+env:
+  matrix:
+    - COMPILER_NAME=clang COMPILER_VERSION=4.0
+    - COMPILER_NAME=clang COMPILER_VERSION=5.0
+    - COMPILER_NAME=clang COMPILER_VERSION=6.0
+    - COMPILER_NAME=clang COMPILER_VERSION=7
+    - COMPILER_NAME=clang COMPILER_VERSION=8
+    - COMPILER_NAME=clang COMPILER_VERSION=9
+    - COMPILER_NAME=gcc COMPILER_VERSION=5
+    - COMPILER_NAME=gcc COMPILER_VERSION=6
+    - COMPILER_NAME=gcc COMPILER_VERSION=7
+    - COMPILER_NAME=gcc COMPILER_VERSION=8
+    - COMPILER_NAME=gcc COMPILER_VERSION=9
+
+script:
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - export TAG=`if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then echo "latest"; else echo ${TRAVIS_PULL_REQUEST_BRANCH}; fi`
+  - if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then python rebuild_and_upload.py --upload --tag ${TAG} --build_number $TRAVIS_BUILD_NUMBER --${COMPILER_NAME} ${COMPILER_VERSION}; else python rebuild_and_upload.py --upload --tag ${TAG} --${COMPILER_NAME} ${COMPILER_VERSION}; fi
