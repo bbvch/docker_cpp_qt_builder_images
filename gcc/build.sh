@@ -27,13 +27,8 @@ while [[ $# -gt 0 ]] ; do
       shift # past argument
       shift # past value
       ;;
-      --qt_version)
-      QT_VERSION="$2"
-      shift # past argument
-      shift # past value
-      ;;
       -h|--help)
-      echo "usage: build.sh [--version gccg-version] [--cmake_versionion cmake-version] [-n image_name]"
+        echo "usage: build.sh [--version gcc-version] [--cmake_version cmake-version] [-n image_name]"
       exit 1
       ;;
       *)    # unknown option
@@ -50,4 +45,4 @@ fi
 CMAKE_VERSION="${CMAKE_FULL_VERSION%.*}"
 CMAKE_BUILD="${CMAKE_FULL_VERSION##*.}"
 
-docker build --build-arg CMAKE_VERSION=${CMAKE_VERSION} --build-arg CMAKE_BUILD=${CMAKE_BUILD} --build-arg QT_VERSION=${QT_VERSION} --build-arg GCC_VERSION=${GCC_VERSION} -t ${IMAGE_NAME} .
+docker build --build-arg CMAKE_VERSION=${CMAKE_VERSION} --build-arg CMAKE_BUILD=${CMAKE_BUILD} --build-arg GCC_VERSION=${GCC_VERSION} -t ${IMAGE_NAME} .

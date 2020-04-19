@@ -6,6 +6,7 @@
 
 Dockerfiles to create container images for building C++ projects with
 cmake (version 3.17.1), Qt (5.14.2), doxygen, conan and different gcc and clang compiler versions.
+The compiler images depend on the pre-built bbvch/qt image (in `qt/`) to have a feasible build times on Travis CI.
 
 The images are uploaded to Dockerhub:
 

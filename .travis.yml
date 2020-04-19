@@ -1,9 +1,15 @@
-sudo: required
-
 language: python
+python:
+  - "3.6"
+
+os: linux
 
 services:
-  - docker
+   - docker
+
+cache: # see https://docs.travis-ci.com/user/caching/
+- directories:
+    - $HOME/.cache
 
 env:
   matrix:
@@ -16,7 +22,16 @@ env:
     - COMPILER_NAME=gcc COMPILER_VERSION=8
     - COMPILER_NAME=gcc COMPILER_VERSION=9
 
+notifications:
+  email:
+    recipients:
+      - michel.estermann@bbv.ch
+    on_success: change
+    on_failure: always
+
+install: skip
+
 script:
-  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - export TAG=`if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then echo "latest"; else echo ${TRAVIS_PULL_REQUEST_BRANCH}; fi`
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then python rebuild_and_upload.py --upload --tag ${TAG} --build_number $TRAVIS_BUILD_NUMBER --${COMPILER_NAME} ${COMPILER_VERSION}; else python rebuild_and_upload.py --upload --tag ${TAG} --${COMPILER_NAME} ${COMPILER_VERSION}; fi
