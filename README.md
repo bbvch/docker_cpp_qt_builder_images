@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/bbvch/docker_cpp_qt_builder_images.svg?branch=master)](https://travis-ci.org/bbvch/docker_cpp_qt_builder_images)
+[![Build Status](https://travis-ci.com/bbvch/docker_cpp_qt_builder_images.svg?branch=master)](https://travis-ci.com/bbvch/docker_cpp_qt_builder_images)
 
 # docker C++ build images
 
