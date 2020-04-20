@@ -33,6 +33,7 @@ RUN apt-get -qq install -y software-properties-common
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update
 RUN apt-get -qq  install -y build-essential
+RUN apt-get -qq  install -y lcov
 RUN apt-get -qq  install -y ninja-build
 RUN apt-get -qq  install -y git
 RUN apt-get -qq  install -y doxygen graphviz
