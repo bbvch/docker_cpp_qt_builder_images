@@ -39,7 +39,7 @@ while [[ $# -gt 0 ]] ; do
 done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
-if [ -z "$IMAGE_NAME"] ; then
+if [ -z "$IMAGE_NAME" ] ; then
   IMAGE_NAME=bbvch/conan_qt-${QT_VERSION}_builder:clang-${CLANG_VERSION}
 fi
 CMAKE_VERSION="${CMAKE_FULL_VERSION%.*}"
