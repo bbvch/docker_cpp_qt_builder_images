@@ -8,7 +8,7 @@ import argparse
 
 
 cmake_version = "3.17.1"
-qt_version = "5.14.2"
+qt_version = "5.15.2"
 
 class Arguments(object):
     """Collect user arguments from CLI
