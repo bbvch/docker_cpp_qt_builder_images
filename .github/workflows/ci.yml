@@ -8,7 +8,19 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: true
+      matrix:
+        # shortcut for common versions 
+        compiler: [clang, gcc]
+        compiler-version: [7, 8 , 9]
+        # include extra clang versions
+        include:
+          - compiler: clang
+            compiler-version: 5.0
+          - compiler: clang
+            compiler-version: 6.0
 
     steps:
       - uses: actions/checkout@v2
@@ -40,9 +52,9 @@ jobs:
         # Push to arbitrary feature branch
         if: github.event.action != 'published' && github.ref != 'refs/heads/main'
         run : |
-          python rebuild_and_upload.py --gcc 9 --tag ${{ steps.vars.outputs.sha_short }} --build_number $GITHUB_RUN_NUMBER
+          python rebuild_and_upload.py --${{ matrix.compiler }} ${{ matrix.compiler-version }} --tag ${{ steps.vars.outputs.sha_short }} --build_number $GITHUB_RUN_NUMBER
       - name: build main and push to dockerhub
         # Push to main
         if: github.event.action != 'published' && github.ref == 'refs/heads/main'
         run : |
-          python rebuild_and_upload.py --gcc 9 --tag latest --build_number $GITHUB_RUN_NUMBER --upload
+          python rebuild_and_upload.py --${{ matrix.compiler }} ${{ matrix.compiler-version }} --tag latest --build_number $GITHUB_RUN_NUMBER --upload
