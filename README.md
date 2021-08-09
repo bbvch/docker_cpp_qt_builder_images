@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/bbvch/docker_cpp_qt_builder_images.svg?branch=master)](https://travis-ci.org/bbvch/docker_cpp_qt_builder_images)
+[![Travis Build Status](https://travis-ci.org/bbvch/docker_cpp_qt_builder_images.svg?branch=master)](https://travis-ci.org/bbvch/docker_cpp_qt_builder_images)
+[![Github Actions Build Status](https://github.com/bbvch/docker_cpp_qt_builder_images/workflows/CI/badge.svg?branch=master)](https://github.com/bbvch/docker_cpp_qt_builder_images/actions)
 
 # docker C++ build images
 
