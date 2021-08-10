@@ -35,6 +35,8 @@ Images are built using github actions to build on any push. Any push to `master`
 
 ### Qt 5.14.2 
 
+Qt 5.14.2 images are missing openssl and bluetooth support for qt
+
 #### GCC
 
 - [bbvch/conan_qt-5.14.2_builder_gcc7 : gcc 7.5.0](https://hub.docker.com/r/bbvch/conan_qt-5.14.2_builder_gcc7)
