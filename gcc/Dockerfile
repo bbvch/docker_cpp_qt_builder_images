@@ -2,7 +2,6 @@ FROM ubuntu:bionic as cmake_builder
 
 ARG CMAKE_VERSION=3.17
 ARG CMAKE_BUILD=1
-ARG QT_VERSION=5.15.2
 
 RUN apt-get update
 RUN apt-get install -y wget
@@ -19,8 +18,9 @@ ENV CMAKE_C_COMPILER=gcc CMAKE_CXX_COMPILER=g++
 
 LABEL maintainer="Michel Estermann <michel.estermann@bbv.ch>"
 
-#install qt
-COPY --from=bbvch/qt:${QT_VERSION} /usr/local/Qt /usr/local/Qt
+#install qt - unfortunately COPY --from does not support build args
+#A possible workaround can be found here
+COPY --from=bbvch/qt:5.15.2 /usr/local/Qt /usr/local/Qt
 ENV Qt5_DIR=/usr/local/Qt
 
 #install cmake
