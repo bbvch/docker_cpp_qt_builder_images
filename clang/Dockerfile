@@ -20,7 +20,7 @@ ENV CMAKE_C_COMPILER=clang CMAKE_CXX_COMPILER=clang++
 LABEL maintainer="Michel Estermann <michel.estermann@bbv.ch>"
 
 #install qt
-COPY --from=bbvch/qt:${QT_VERSION} /usr/local/Qt /usr/local/Qt
+COPY --from=bbvch/qt:5.15.2 /usr/local/Qt /usr/local/Qt
 ENV Qt5_DIR=/usr/local/Qt
 
 #install cmake
