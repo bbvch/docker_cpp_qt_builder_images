@@ -2,7 +2,7 @@
 
 set -e
 
-QT_VERSION=5.14.2
+QT_VERSION=5.15.2
 IMAGE_NAME=""
 
 POSITIONAL=()

@@ -18,8 +18,9 @@ ENV CMAKE_C_COMPILER=gcc CMAKE_CXX_COMPILER=g++
 
 LABEL maintainer="Michel Estermann <michel.estermann@bbv.ch>"
 
-#install qt
-COPY --from=bbvch/qt:5.14.2 /usr/local/Qt /usr/local/Qt
+#install qt - unfortunately COPY --from does not support build args
+#A possible workaround can be found here
+COPY --from=bbvch/qt:5.15.2 /usr/local/Qt /usr/local/Qt
 ENV Qt5_DIR=/usr/local/Qt
 
 #install cmake
