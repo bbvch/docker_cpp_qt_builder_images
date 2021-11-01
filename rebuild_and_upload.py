@@ -137,12 +137,14 @@ class Builder(object):
             image_name = "bbvch/conan_qt-{}_builder_{}{}".format(qt_version, self.__compiler_name, compiler_version.replace(".", ""))
             tagged_image_name = "{}:{}".format(image_name,tag) if len(tag) > 0 else image_name
             build_image_name = "{}:{}".format(image_name,build_number) if len(build_number) > 0 else tagged_image_name
-            os.system("cd {} && ./build.sh -n {} -v {} --cmake_version {} --qt_version {}".format(folder_name, tagged_image_name, compiler_version, cmake_version, qt_version))
+            return_value = os.system("cd {} && ./build.sh -n {} -v {} --cmake_version {} --qt_version {}".format(folder_name, tagged_image_name, compiler_version, cmake_version, qt_version))
             if upload_after_build:
                 if build_image_name != tagged_image_name:
-                    os.system("docker tag {} {}".format(tagged_image_name, build_image_name))
-                    os.system("sudo docker push {}".format(build_image_name))
-                os.system("sudo docker push {}".format(tagged_image_name))
+                    return_value += os.system("docker tag {} {}".format(tagged_image_name, build_image_name))
+                    return_value += os.system("sudo docker push {}".format(build_image_name))
+                return_value += os.system("sudo docker push {}".format(tagged_image_name))
+            if return_value != 0:
+                return return_value
 
     @property
     def name(self):
@@ -173,4 +175,5 @@ if __name__ == "__main__":
     args = Arguments()
     for builder in [GccBuilder(), ClangBuilder()]:
         if builder.name in args.compilers:
-            builder.build_and_upload(args.upload, args.versions(builder.name), args.tag, args.build_number, args.cmake_version, args.qt_version)
+            return_value = builder.build_and_upload(args.upload, args.versions(builder.name), args.tag, args.build_number, args.cmake_version, args.qt_version)
+            sys.exit(return_value)
