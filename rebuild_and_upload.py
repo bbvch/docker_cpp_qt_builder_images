@@ -141,8 +141,8 @@ class Builder(object):
             if upload_after_build:
                 if build_image_name != tagged_image_name:
                     return_value += os.system("docker tag {} {}".format(tagged_image_name, build_image_name))
-                    return_value += os.system("sudo docker push {}".format(build_image_name))
-                return_value += os.system("sudo docker push {}".format(tagged_image_name))
+                    return_value += os.system("docker push {}".format(build_image_name))
+                return_value += os.system("docker push {}".format(tagged_image_name))
             if return_value != 0:
                 return return_value
 
