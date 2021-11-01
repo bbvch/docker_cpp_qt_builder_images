@@ -36,6 +36,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUBUSERNAME }}
           password: ${{ secrets.DOCKERHUBPASSWORD }}
+          logout: true
 
       - name: Set output variables
         id: vars
