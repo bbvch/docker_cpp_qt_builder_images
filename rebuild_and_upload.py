@@ -143,8 +143,8 @@ class Builder(object):
                     return_value += os.system("docker tag {} {}".format(tagged_image_name, build_image_name))
                     return_value += os.system("docker push {}".format(build_image_name))
                 return_value += os.system("docker push {}".format(tagged_image_name))
-            if return_value != 0:
-                return return_value
+            return (return_value == 0)
+                
 
     @property
     def name(self):
@@ -175,5 +175,9 @@ if __name__ == "__main__":
     args = Arguments()
     for builder in [GccBuilder(), ClangBuilder()]:
         if builder.name in args.compilers:
+            
             return_value = builder.build_and_upload(args.upload, args.versions(builder.name), args.tag, args.build_number, args.cmake_version, args.qt_version)
-            sys.exit(return_value)
+            if(return_value):
+                sys.exit(0)
+            else:
+                sys.exit(1)
