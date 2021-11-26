@@ -14,13 +14,15 @@ jobs:
       matrix:
         # shortcut for common versions 
         compiler: [clang, gcc]
-        compiler-version: [7, 8 , 9]
+        compiler-version: [7, 8 , 9, 10, 11]
         # include extra clang versions
         include:
           - compiler: clang
             compiler-version: 5.0
           - compiler: clang
             compiler-version: 6.0
+          - compiler: clang
+            compiler-version: 12
 
     steps:
       - uses: actions/checkout@v2
