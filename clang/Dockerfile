@@ -42,8 +42,10 @@ RUN apt-get -qq  install -y doxygen graphviz
 
 # add repos for clang 10 and clang 11
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+RUN echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-12 main" | tee -a /etc/apt/sources.list
 RUN echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-11 main" | tee -a /etc/apt/sources.list
 RUN echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main" | tee -a /etc/apt/sources.list
+
 RUN apt-get update
 
 #install qt dependencies
