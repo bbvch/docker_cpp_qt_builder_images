@@ -159,7 +159,7 @@ class GccBuilder(Builder):
     def __init__(self):
         Builder.__init__(
             self, "gcc",
-            ["7", "8", "9"])
+            ["7", "8", "9", "10", "11"])
 
 
 class ClangBuilder(Builder):
@@ -168,7 +168,7 @@ class ClangBuilder(Builder):
     def __init__(self):
         Builder.__init__(
             self, "clang", 
-            ["5.0", "6.0", "7", "8", "9"])
+            ["5.0", "6.0", "7", "8", "9", "10", "11", "12"])
 
 
 if __name__ == "__main__":
