@@ -24,6 +24,8 @@ Images are built using github actions to build on any push. Any push to `master`
 - [bbvch/conan_qt-5.15.2_builder_gcc7 : gcc 7.5.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_gcc7)
 - [bbvch/conan_qt-5.15.2_builder_gcc8 : gcc 8.4.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_gcc8)
 - [bbvch/conan_qt-5.15.2_builder_gcc9 : gcc 9.3.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_gcc9)
+- [bbvch/conan_qt-5.15.2_builder_gcc10 : gcc 10](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_gcc10)
+- [bbvch/conan_qt-5.15.2_builder_gcc11 : gcc 11](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_gcc11)
 
 #### Clang
 - [bbvch/conan_qt-5.15.2_builder_clang50: clang 5.0.1](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_clang50)
@@ -31,6 +33,9 @@ Images are built using github actions to build on any push. Any push to `master`
 - [bbvch/conan_qt-5.15.2_builder_clang7: clang 7.0.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_clang7)
 - [bbvch/conan_qt-5.15.2_builder_clang8: clang 8.0.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_clang8)
 - [bbvch/conan_qt-5.15.2_builder_clang9: clang 9.0.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_clang9)
+- [bbvch/conan_qt-5.15.2_builder_clang10: clang 10.0.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_clang10)
+- [bbvch/conan_qt-5.15.2_builder_clang11: clang 11.0.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_clang11)
+- [bbvch/conan_qt-5.15.2_builder_clang12: clang 12.0.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_clang12)
 
 
 ### Qt 5.14.2 
