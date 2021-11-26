@@ -29,6 +29,7 @@ COPY --from=cmake_builder /opt/cmake /opt/cmake
 RUN ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
 RUN ln -s /opt/cmake/bin/ctest /usr/local/bin/ctest
 
+
 RUN apt-get update
 RUN apt-get -qq install -y software-properties-common
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
@@ -36,13 +37,22 @@ RUN apt-get update
 RUN apt-get -qq  install -y build-essential
 RUN apt-get -qq  install -y lcov
 RUN apt-get -qq  install -y ninja-build
-RUN apt-get -qq  install -y git
+RUN apt-get -qq  install -y git wget
 RUN apt-get -qq  install -y doxygen graphviz
+
+# add repos for clang 10 and clang 11
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+RUN echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-11 main" | tee -a /etc/apt/sources.list
+RUN echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main" | tee -a /etc/apt/sources.list
+RUN apt-get update
 
 #install qt dependencies
 RUN apt-get -qq install -y mesa-common-dev libglu1-mesa-dev libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev libxcb-glx0-dev libxkbcommon-x11-dev
 
 # Install Clang and dependencies
+# add repo for llvm
+
+
 RUN apt-get -qq install -y clang-${CLANG_VERSION} clang-tidy-${CLANG_VERSION} clang-format-${CLANG_VERSION} 
 RUN apt-get -qq install -y llvm-${CLANG_VERSION} llvm-${CLANG_VERSION}-dev llvm-${CLANG_VERSION}-runtime llvm 
 RUN apt-get -qq install -y libc++1 libc++abi1
