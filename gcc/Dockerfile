@@ -28,6 +28,9 @@ COPY --from=cmake_builder /opt/cmake /opt/cmake
 
 RUN ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
 RUN ln -s /opt/cmake/bin/ctest /usr/local/bin/ctest
+RUN ln -s /opt/cmake/bin/cpack /usr/local/bin/cpack
+RUN ln -s /opt/cmake/bin/ccmake /usr/local/bin/ccmake
+RUN ln -s /opt/cmake/bin/cmake-gui /usr/local/bin/cmake-gui
 
 RUN apt-get update
 RUN apt-get -qq install -y software-properties-common
