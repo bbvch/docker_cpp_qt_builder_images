@@ -7,7 +7,7 @@ import sys
 import argparse
 
 
-cmake_version = "3.17.1"
+cmake_version = "3.22.1"
 qt_version = "5.15.2"
 
 class Arguments(object):

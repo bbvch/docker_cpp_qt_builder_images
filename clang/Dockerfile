@@ -1,14 +1,14 @@
 FROM ubuntu:bionic as cmake_builder
 
-ARG CMAKE_VERSION=3.17
+ARG CMAKE_VERSION=3.22
 ARG CMAKE_BUILD=1
 ARG QT_VERSION=5.15.2
 
 RUN apt-get update
 RUN apt-get install -y wget
-RUN wget https://cmake.org/files/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.${CMAKE_BUILD}-Linux-x86_64.sh 
+RUN wget https://cmake.org/files/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.${CMAKE_BUILD}-linux-x86_64.sh 
 RUN mkdir /opt/cmake
-RUN sh cmake-${CMAKE_VERSION}.${CMAKE_BUILD}-Linux-x86_64.sh --skip-license --prefix=/opt/cmake
+RUN sh cmake-${CMAKE_VERSION}.${CMAKE_BUILD}-linux-x86_64.sh --skip-license --prefix=/opt/cmake
 
 FROM ubuntu:bionic
 

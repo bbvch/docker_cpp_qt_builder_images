@@ -6,7 +6,7 @@
 ## Usage
 
 Dockerfiles to create container images for building C++ projects with
-cmake (version 3.17.1), Qt (5.15.2), doxygen, conan, openssl and different gcc and clang compiler versions.
+cmake (version 3.22.1), Qt (5.15.2), doxygen, conan, openssl and different gcc and clang compiler versions.
 The compiler images depend on the pre-built bbvch/qt image (in `qt/`) to have a feasible build times on CI.
 
 The images are uploaded to Dockerhub:
@@ -17,7 +17,7 @@ Images are built using github actions to build on any push. Any push to `master`
 
 ## Available images 
 
-### Qt 5.15.2
+### Qt 5.15.2 & CMake 3.22.1
 
 #### GCC
 
@@ -38,7 +38,7 @@ Images are built using github actions to build on any push. Any push to `master`
 - [bbvch/conan_qt-5.15.2_builder_clang12: clang 12.0.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_clang12)
 
 
-### Qt 5.14.2 
+### Qt 5.14.2 & CMake 3.17.1
 
 Qt 5.14.2 images are missing openssl and bluetooth support for qt
 

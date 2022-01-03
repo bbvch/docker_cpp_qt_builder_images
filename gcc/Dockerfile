@@ -1,13 +1,13 @@
 FROM ubuntu:bionic as cmake_builder
 
-ARG CMAKE_VERSION=3.17
+ARG CMAKE_VERSION=3.22
 ARG CMAKE_BUILD=1
 
 RUN apt-get update
 RUN apt-get install -y wget
-RUN wget https://cmake.org/files/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.${CMAKE_BUILD}-Linux-x86_64.sh 
+RUN wget https://cmake.org/files/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.${CMAKE_BUILD}-linux-x86_64.sh 
 RUN mkdir /opt/cmake
-RUN sh cmake-${CMAKE_VERSION}.${CMAKE_BUILD}-Linux-x86_64.sh --skip-license --prefix=/opt/cmake
+RUN sh cmake-${CMAKE_VERSION}.${CMAKE_BUILD}-linux-x86_64.sh --skip-license --prefix=/opt/cmake
 
 FROM ubuntu:bionic
 
@@ -51,6 +51,7 @@ RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${GCC_VERSION} 1
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${GCC_VERSION} 100
 RUN update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-${GCC_VERSION} 100
 RUN update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-${GCC_VERSION} 100
+RUN update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-${GCC_VERSION} 100
 
 #install conan
 RUN apt-get -qq install -y python3 python3-pip
