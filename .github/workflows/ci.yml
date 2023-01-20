@@ -15,26 +15,30 @@ jobs:
         # shortcut for common versions 
         compiler: [clang, gcc]
         compiler-version: ["7", "8" , "9", "10", "11"]
+        ubuntu_base: ["focal"]
         # include extra clang versions
         include:
           - compiler: clang
-            compiler-version: "5.0"
-          - compiler: clang
-            compiler-version: "6.0"
-          - compiler: clang
             compiler-version: "12"
+            ubuntu_base: "focal"
+          - compiler: clang
+            compiler-version: "13"
+            ubuntu_base: "focal"
+          - compiler: clang
+            compiler-version: "14"
+            ubuntu_base: "focal"
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
 
       - name: setup Docker buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
 
       - name: login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUBUSERNAME }}
           password: ${{ secrets.DOCKERHUBPASSWORD }}
@@ -43,8 +47,8 @@ jobs:
       - name: Set output variables
         id: vars
         run: |
-          echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-          echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
+          echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT 
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT 
 
       - name: Check output variables
         run: |
@@ -55,9 +59,9 @@ jobs:
         # Push to arbitrary feature branch will not push the image
         if: github.event.action != 'published' && github.ref != 'refs/heads/master'
         run : |
-          python rebuild_and_upload.py --${{ matrix.compiler }} ${{ matrix.compiler-version }} --tag ${{ steps.vars.outputs.sha_short }} --build_number $GITHUB_RUN_NUMBER
+          python rebuild_and_upload.py --base ${{ matrix.ubuntu_base }} --${{ matrix.compiler }} ${{ matrix.compiler-version }} --tag ${{ steps.vars.outputs.sha_short }} --build_number $GITHUB_RUN_NUMBER --test
       - name: build main and push to dockerhub
         # Push to master will push the image to master
         if: github.event.action != 'published' && github.ref == 'refs/heads/master'
         run : |
-          python rebuild_and_upload.py --${{ matrix.compiler }} ${{ matrix.compiler-version }} --tag latest --build_number $GITHUB_RUN_NUMBER --upload
+          python rebuild_and_upload.py --base ${{ matrix.ubuntu_base }} --${{ matrix.compiler }} ${{ matrix.compiler-version }} --tag latest --build_number $GITHUB_RUN_NUMBER --test --upload

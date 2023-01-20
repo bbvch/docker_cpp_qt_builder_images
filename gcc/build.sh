@@ -2,10 +2,11 @@
 
 set -e
 
-CMAKE_FULL_VERSION=3.17.1
+CMAKE_FULL_VERSION=3.25.2
 GCC_VERSION=7
-QT_VERSION=5.14.2
+QT_VERSION=5.15.1
 IMAGE_NAME=""
+UBUNTU_BASE="focal"
 
 POSITIONAL=()
 while [[ $# -gt 0 ]] ; do
@@ -27,8 +28,18 @@ while [[ $# -gt 0 ]] ; do
       shift # past argument
       shift # past value
       ;;
+      --qt_version)
+      QT_VERSION="$2"
+      shift # past argument
+      shift # past value
+      ;;
+      -b|--base)
+      UBUNTU_BASE="$2"
+      shift # past argument
+      shift # past value
+      ;;
       -h|--help)
-        echo "usage: build.sh [--version gcc-version] [--cmake_version cmake-version] [-n image_name]"
+      echo "usage: build.sh [--version gcc-version] [--cmake_version cmake-version] [--qt_version qt_version] [-b ubuntu_base] [-n image_name]"
       exit 1
       ;;
       *)    # unknown option
@@ -45,4 +56,4 @@ fi
 CMAKE_VERSION="${CMAKE_FULL_VERSION%.*}"
 CMAKE_BUILD="${CMAKE_FULL_VERSION##*.}"
 
-docker build --build-arg CMAKE_VERSION=${CMAKE_VERSION} --build-arg CMAKE_BUILD=${CMAKE_BUILD} --build-arg GCC_VERSION=${GCC_VERSION} -t ${IMAGE_NAME} .
+docker build --build-arg CMAKE_VERSION=${CMAKE_VERSION} --build-arg GCC_VERSION=${GCC_VERSION} --build-arg QT_VERSION=${QT_VERSION} --build-arg UBUNTU_BASE=${UBUNTU_BASE} -t ${IMAGE_NAME} .
