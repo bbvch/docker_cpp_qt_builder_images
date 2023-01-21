@@ -14,7 +14,7 @@ jobs:
       matrix:
         # shortcut for common versions 
         compiler: [clang, gcc]
-        compiler-version: ["7", "8" , "9", "10", "11"]
+        compiler-version: ["7", "8", "9", "10", "11"]
         ubuntu_base: ["focal"]
         # include extra clang versions
         include:
@@ -27,6 +27,18 @@ jobs:
           - compiler: clang
             compiler-version: "14"
             ubuntu_base: "focal"
+          - compiler: clang
+            compiler-version: "14"
+            ubuntu_base: "jammy"
+          - compiler: clang
+            compiler-version: "15"
+            ubuntu_base: "jammy"
+          - compiler: gcc
+            compiler-version: "11"
+            ubuntu_base: "jammy"
+          - compiler: gcc
+            compiler-version: "12"
+            ubuntu_base: "jammy"
 
     steps:
       - uses: actions/checkout@v3

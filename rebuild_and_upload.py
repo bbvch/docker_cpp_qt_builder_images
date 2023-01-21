@@ -198,7 +198,7 @@ class ClangBuilder(Builder):
     def __init__(self):
         Builder.__init__(
             self, "clang", 
-            ["7", "8", "9", "10", "11", "12", "13", "14"])
+            ["7", "8", "9", "10", "11", "12", "13", "14", "15"])
 
 
 if __name__ == "__main__":
