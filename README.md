@@ -16,6 +16,18 @@ Images are built using github actions to build on any push. Any push to `master`
 
 ## Available images 
 
+### Qt 5.15.8-lts-lgpl & CMake 3.25.2 (jammy)
+
+#### GCC
+
+- [bbvch/conan_qt-5.15.8_builder_gcc11_jammy : gcc 11.3.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_gcc11_jammy)
+- [bbvch/conan_qt-5.15.8_builder_gcc121_jammy : gcc 12.1.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_gcc12_jammy)
+
+#### Clang
+- [bbvch/conan_qt-5.15.8_builder_clang15_jammy: clang 14.0.6](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_clang14_jammy)
+- [bbvch/conan_qt-5.15.8_builder_clang15_jammy: clang 15.0.7](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_clang15_jammy)
+
+
 ### Qt 5.15.8-lts-lgpl & CMake 3.25.2 (focal)
 
 #### GCC

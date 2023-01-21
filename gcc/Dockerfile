@@ -70,8 +70,8 @@ RUN update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-${GCC_VERSION
 RUN apt-get -qq install -y python3 python3-pip
 RUN pip3 install conan
 
-RUN conan profile new default --detect
-RUN conan profile update settings.compiler.libcxx=libstdc++11 default
+RUN conan profile new default --detect && \
+    conan profile update settings.compiler.libcxx=libstdc++11 default
 
 # Cleanup
 RUN apt-get -qq autoremove
