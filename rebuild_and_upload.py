@@ -7,8 +7,11 @@ import sys
 import argparse
 
 
-cmake_version = "3.22.1"
-qt_version = "5.15.2"
+cmake_version = "3.25.2"
+qt_version = "5.15.8"
+ubuntu_base="focal"
+test_example_dir ="test_example"
+test_cmake_command="mkdir ../build && cmake -S . -B ../build && cmake --build ../build"
 
 class Arguments(object):
     """Collect user arguments from CLI
@@ -19,6 +22,10 @@ class Arguments(object):
         self.__parser.add_argument(
             "--upload",
             help="Upload image to hub docker after build",
+            action="store_true")
+        self.__parser.add_argument(
+            "--test",
+            help="Test image after build",
             action="store_true")
         self.__parser.add_argument(
             "--all",
@@ -38,6 +45,10 @@ class Arguments(object):
             "--qt_version",
             help="Qt version to install.",
             default=qt_version)
+        self.__parser.add_argument(
+            "--base",
+            help="ubuntu base image, e.g. bionic, focal...",
+            default=ubuntu_base)
         self.__parser.add_argument('--gcc',
                             nargs='*',
                             dest='gcc_versions',
@@ -59,6 +70,12 @@ class Arguments(object):
         """If image should be uploaded to hub.docker
         """
         return self.__args.upload
+
+    @property
+    def test(self):
+        """If image should be tested
+        """
+        return self.__args.test
 
     @property
     def tag(self):
@@ -89,6 +106,14 @@ class Arguments(object):
         """
         if self.__args.qt_version:
             return self.__args.qt_version
+        return "" 
+
+    @property
+    def ubuntu_base(self):
+        """ubuntu base image to use.
+        """
+        if self.__args.base:
+            return self.__args.base
         return ""    
 
 
@@ -128,21 +153,26 @@ class Builder(object):
         self.__compiler_name = compiler_name
         self.__compiler_versions = compiler_versions
 
-    def build_and_upload(self, upload_after_build, versions, tag, build_number, cmake_version, qt_version):
+    def build_and_upload(self, test_after_build, upload_after_build, versions, tag, build_number, cmake_version, qt_version, ubuntu_base):
         """Build docker image and upload to server
         """
         compiler_versions = versions or self.__compiler_versions
         for compiler_version in compiler_versions:
-            folder_name = "{}".format(self.__compiler_name)
-            image_name = "bbvch/conan_qt-{}_builder_{}{}".format(qt_version, self.__compiler_name, compiler_version.replace(".", ""))
-            tagged_image_name = "{}:{}".format(image_name,tag) if len(tag) > 0 else image_name
-            build_image_name = "{}:{}".format(image_name,build_number) if len(build_number) > 0 else tagged_image_name
-            return_value = os.system("cd {} && ./build.sh -n {} -v {} --cmake_version {} --qt_version {}".format(folder_name, tagged_image_name, compiler_version, cmake_version, qt_version))
+            folder_name = f'{self.__compiler_name}'
+            image_name = f'bbvch/conan_qt-{qt_version}_builder_{self.__compiler_name}{compiler_version.replace(".", "")}_{ubuntu_base}'
+            tagged_image_name = f'{image_name}:{tag}' if len(tag) > 0 else image_name
+            build_image_name = f'{image_name}:{build_number}' if len(build_number) > 0 else tagged_image_name
+            return_value = os.system(f'cd {folder_name} && ./build.sh -n {tagged_image_name} -v {compiler_version} --cmake_version {cmake_version} --qt_version {qt_version} -b {ubuntu_base}')
+            if return_value == 0 and test_after_build:
+                return_value += os.system(f'docker run --rm -v "$(pwd)"/{test_example_dir}:/example -w /example {tagged_image_name} /bin/bash -c "{test_cmake_command}"')
+                if return_value > 0:
+                    return (return_value == 0)
+        
             if upload_after_build:
                 if build_image_name != tagged_image_name:
-                    return_value += os.system("docker tag {} {}".format(tagged_image_name, build_image_name))
-                    return_value += os.system("docker push {}".format(build_image_name))
-                return_value += os.system("docker push {}".format(tagged_image_name))
+                    return_value += os.system(f'docker tag {tagged_image_name} {build_image_name}')
+                    return_value += os.system(f'docker push {build_image_name}')
+                return_value += os.system(f'docker push {tagged_image_name}')
             return (return_value == 0)
                 
 
@@ -159,7 +189,7 @@ class GccBuilder(Builder):
     def __init__(self):
         Builder.__init__(
             self, "gcc",
-            ["7", "8", "9", "10", "11"])
+            ["7", "8", "9", "10", "11", "12"])
 
 
 class ClangBuilder(Builder):
@@ -168,7 +198,7 @@ class ClangBuilder(Builder):
     def __init__(self):
         Builder.__init__(
             self, "clang", 
-            ["5.0", "6.0", "7", "8", "9", "10", "11", "12"])
+            ["7", "8", "9", "10", "11", "12", "13", "14"])
 
 
 if __name__ == "__main__":
@@ -176,7 +206,7 @@ if __name__ == "__main__":
     for builder in [GccBuilder(), ClangBuilder()]:
         if builder.name in args.compilers:
             
-            return_value = builder.build_and_upload(args.upload, args.versions(builder.name), args.tag, args.build_number, args.cmake_version, args.qt_version)
+            return_value = builder.build_and_upload(args.test, args.upload, args.versions(builder.name), args.tag, args.build_number, args.cmake_version, args.qt_version, args.ubuntu_base)
             if(return_value):
                 sys.exit(0)
             else:

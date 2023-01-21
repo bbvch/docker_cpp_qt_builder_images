@@ -1,13 +1,12 @@
-[![Travis Build Status](https://travis-ci.org/bbvch/docker_cpp_qt_builder_images.svg?branch=master)](https://travis-ci.org/bbvch/docker_cpp_qt_builder_images)
 [![Github Actions Build Status](https://github.com/bbvch/docker_cpp_qt_builder_images/workflows/CI/badge.svg?branch=master)](https://github.com/bbvch/docker_cpp_qt_builder_images/actions)
 
 # docker C++ build images
 
 ## Usage
 
-Dockerfiles to create container images for building C++ projects with
-cmake (version 3.22.1), Qt (5.15.2), doxygen, conan, openssl and different gcc and clang compiler versions.
-The compiler images depend on the pre-built bbvch/qt image (in `qt/`) to have a feasible build times on CI.
+_Ubuntu focal_ based dockerfiles to create container images for building C++ projects with
+cmake, Qt, doxygen, conan, openssl and different gcc and clang compiler versions.
+The compiler images depend on the pre-built bbvch/qt image (in `qt/`) to have feasible build times on CI.
 
 The images are uploaded to Dockerhub:
 
@@ -17,7 +16,28 @@ Images are built using github actions to build on any push. Any push to `master`
 
 ## Available images 
 
-### Qt 5.15.2 & CMake 3.22.1
+### Qt 5.15.8-lts-lgpl & CMake 3.25.2 (focal)
+
+#### GCC
+
+- [bbvch/conan_qt-5.15.8_builder_gcc7_focal : gcc 7.5.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_gcc7_focal)
+- [bbvch/conan_qt-5.15.8_builder_gcc8_focal : gcc 8.4.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_gcc8_focal)
+- [bbvch/conan_qt-5.15.8_builder_gcc9_focal : gcc 9.4.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_gcc9_focal)
+- [bbvch/conan_qt-5.15.8_builder_gcc10_focal : gcc 10.3.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_gcc10_focal)
+- [bbvch/conan_qt-5.15.8_builder_gcc11_focal : gcc 11.1.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_gcc11_focal)
+
+#### Clang
+- [bbvch/conan_qt-5.15.8_builder_clang7_focal: clang 7.0.1](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_clang7_focal)
+- [bbvch/conan_qt-5.15.8_builder_clang8_focal: clang 8.0.1](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_clang8_focal)
+- [bbvch/conan_qt-5.15.8_builder_clang9_focal: clang 9.0.1](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_clang9_focal)
+- [bbvch/conan_qt-5.15.8_builder_clang10_focal: clang 10.0.1](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_clang10_focal)
+- [bbvch/conan_qt-5.15.8_builder_clang11_focal: clang 11.1.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_clang11_focal)
+- [bbvch/conan_qt-5.15.8_builder_clang12_focal: clang 12.0.1](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_clang12_focal)
+- [bbvch/conan_qt-5.15.8_builder_clang13_focal: clang 13.0.1](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_clang13_focal)
+- [bbvch/conan_qt-5.15.8_builder_clang14_focal: clang 14.0.6](https://hub.docker.com/r/bbvch/conan_qt-5.15.8_builder_clang14_focal)
+
+
+### Qt 5.15.2 & CMake 3.22.1 (bionic)
 
 #### GCC
 
@@ -38,7 +58,7 @@ Images are built using github actions to build on any push. Any push to `master`
 - [bbvch/conan_qt-5.15.2_builder_clang12: clang 12.0.0](https://hub.docker.com/r/bbvch/conan_qt-5.15.2_builder_clang12)
 
 
-### Qt 5.14.2 & CMake 3.17.1
+### Qt 5.14.2 & CMake 3.17.1 (bionic)
 
 Qt 5.14.2 images are missing openssl and bluetooth support for qt
 

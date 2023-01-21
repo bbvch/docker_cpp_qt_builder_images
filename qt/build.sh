@@ -2,7 +2,8 @@
 
 set -e
 
-QT_VERSION=5.15.2
+QT_VERSION=5.15.8
+UBUNTU_BASE="focal"
 IMAGE_NAME=""
 
 POSITIONAL=()
@@ -20,8 +21,13 @@ while [[ $# -gt 0 ]] ; do
       shift # past argument
       shift # past value
       ;;
+      -b|--base)
+      UBUNTU_BASE="$2"
+      shift # past argument
+      shift # past value
+      ;;
       -h|--help)
-      echo "usage: build.sh [--version clang-version] [--cmake_versionion cmake-version] [-n image_name]"
+      echo "usage: build.sh [--qt_version qt-version] [-b ubuntu_base] [-n image_name]"
       exit 1
       ;;
       *)    # unknown option
@@ -33,7 +39,7 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 if [ -z "$IMAGE_NAME"] ; then
-  IMAGE_NAME=bbvch/qt:${QT_VERSION}
+  IMAGE_NAME=bbvch/${UBUNTU_BASE}_qt:${QT_VERSION}
 fi
 
-docker build --build-arg QT_VERSION=${QT_VERSION} -t ${IMAGE_NAME} .
+docker build --build-arg QT_VERSION=${QT_VERSION} --build-arg UBUNTU_BASE=${UBUNTU_BASE} -t ${IMAGE_NAME} .
